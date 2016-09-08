@@ -1,6 +1,6 @@
-const _debounce = require('lodash.debounce')
-const React = require('react')
-const onElementResize = require('element-resize-event')
+const _debounce = require('lodash.debounce');
+const React = require('react');
+const onElementResize = require('element-resize-event');
 
 function defaultGetDimensions (element) {
   return [element.clientWidth, element.clientHeight]
@@ -85,14 +85,14 @@ module.exports = function Dimensions ({
     return class DimensionsHOC extends React.Component {
       // ES7 Class properties
       // http://babeljs.io/blog/2015/06/07/react-on-es6-plus/#property-initializers
-      state = {}
+      state = {};
 
       // Using arrow functions and ES7 Class properties to autobind
       // http://babeljs.io/blog/2015/06/07/react-on-es6-plus/#arrow-functions
 
       // Immediate updateDimensions callback with no debounce
       updateDimensionsImmediate = () => {
-        const dimensions = getDimensions(this._parent)
+        const dimensions = getDimensions(this.refs.wrapper);
 
         if (dimensions[0] !== this.state.containerWidth ||
             dimensions[1] !== this.state.containerHeight) {
@@ -101,19 +101,19 @@ module.exports = function Dimensions ({
             containerHeight: dimensions[1]
           })
         }
-      }
+      };
 
       // Optionally-debounced updateDimensions callback
       updateDimensions = debounce === 0 ? this.updateDimensionsImmediate
-        : _debounce(this.updateDimensionsImmediate, debounce, debounceOpts)
+        : _debounce(this.updateDimensionsImmediate, debounce, debounceOpts);
 
       onResize = () => {
-        if (this.rqf) return
+        if (this.rqf) return;
         this.rqf = this.getWindow().requestAnimationFrame(() => {
-          this.rqf = null
+          this.rqf = null;
           this.updateDimensions()
         })
-      }
+      };
 
       // If the component is mounted in a different window to the javascript
       // context, as with https://github.com/JakeGinnivan/react-popout
@@ -128,8 +128,8 @@ module.exports = function Dimensions ({
         if (!this.refs.wrapper) {
           throw new Error('Cannot find wrapper div')
         }
-        this._parent = this.refs.wrapper.parentNode
-        this.updateDimensionsImmediate()
+        this._parent = this.refs.wrapper.parentNode;
+        this.updateDimensionsImmediate();
         if (elementResize) {
           // Experimental: `element-resize-event` fires when an element resizes.
           // It attaches its own window resize listener and also uses
@@ -141,7 +141,7 @@ module.exports = function Dimensions ({
       }
 
       componentWillUnmount () {
-        this.getWindow().removeEventListener('resize', this.onResize)
+        this.getWindow().removeEventListener('resize', this.onResize);
         // TODO: remote element-resize-event listener.
         // pending https://github.com/KyleAMathews/element-resize-event/issues/2
       }
@@ -158,7 +158,7 @@ module.exports = function Dimensions ({
       }
 
       render () {
-        const {containerWidth, containerHeight} = this.state
+        const {containerWidth, containerHeight} = this.state;
         if (this._parent && !containerWidth && !containerHeight) {
           // only trigger a warning about the wrapper div if we already have a reference to it
           console.warn('Wrapper div has no height or width, try overriding style with `containerStyle` option')

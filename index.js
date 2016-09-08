@@ -115,7 +115,7 @@ module.exports = function Dimensions() {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref2 = DimensionsHOC.__proto__ || Object.getPrototypeOf(DimensionsHOC)).call.apply(_ref2, [this].concat(args))), _this), _this.state = {}, _this.updateDimensionsImmediate = function () {
-          var dimensions = getDimensions(_this._parent);
+          var dimensions = getDimensions(_this.refs.wrapper);
 
           if (dimensions[0] !== _this.state.containerWidth || dimensions[1] !== _this.state.containerHeight) {
             _this.setState({
